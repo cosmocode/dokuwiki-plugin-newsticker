@@ -1,0 +1,7 @@
+base   newsticker
+author Michael Große
+email  grosse@cosmocode.de
+date   2015-10-21
+name   newsticker plugin
+desc   Add a simple newsticker to a page
+url    https://dokuwiki.org/plugins:newsticker
