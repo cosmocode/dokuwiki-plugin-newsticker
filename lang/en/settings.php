@@ -6,7 +6,7 @@
  */
 
 // keys need to match the config setting name
-// $lang['fixme'] = 'FIXME';
+$lang['duration'] = 'Time before next message is shown in seconds';
 
 
 

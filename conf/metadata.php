@@ -6,5 +6,5 @@
  */
 
 
-//$meta['fixme'] = array('string');
+$meta['duration'] = array('numeric', '_min' => 1);
 

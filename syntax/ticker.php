@@ -14,19 +14,20 @@ class syntax_plugin_newsticker_ticker extends DokuWiki_Syntax_Plugin {
      * @return string Syntax mode type
      */
     public function getType() {
-        return 'FIXME: container|baseonly|formatting|substition|protected|disabled|paragraphs';
+        return 'container';
     }
+
     /**
      * @return string Paragraph type
      */
     public function getPType() {
-        return 'FIXME: normal|block|stack';
+        return 'block';
     }
     /**
      * @return int Sort order - Low numbers go before high numbers
      */
     public function getSort() {
-        return FIXME;
+        return 100;
     }
 
     /**
@@ -35,13 +36,12 @@ class syntax_plugin_newsticker_ticker extends DokuWiki_Syntax_Plugin {
      * @param string $mode Parser mode
      */
     public function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('<FIXME>',$mode,'plugin_newsticker_ticker');
-//        $this->Lexer->addEntryPattern('<FIXME>',$mode,'plugin_newsticker_ticker');
+        $this->Lexer->addEntryPattern('<newsticker>',$mode,'plugin_newsticker_ticker');
     }
 
-//    public function postConnect() {
-//        $this->Lexer->addExitPattern('</FIXME>','plugin_newsticker_ticker');
-//    }
+    public function postConnect() {
+        $this->Lexer->addExitPattern('</newsticker>','plugin_newsticker_ticker');
+    }
 
     /**
      * Handle matches of the newsticker syntax
@@ -53,9 +53,29 @@ class syntax_plugin_newsticker_ticker extends DokuWiki_Syntax_Plugin {
      * @return array Data for the renderer
      */
     public function handle($match, $state, $pos, Doku_Handler &$handler){
+        if ($state !== 3) {
+            return array();
+        }
         $data = array();
+        $lines = explode("\n",$match);
+        $lines = $this->cleanData($lines);
+        foreach ($lines as $newsItem) {
+            $instructions = p_get_instructions($newsItem);
+            $data[] = $instructions;
+        }
 
         return $data;
+    }
+
+    public function cleanData($data) {
+        $cleanedData = array();
+        foreach ($data as $item) {
+            $item = trim($item);
+            if (!empty($item)) {
+                $cleanedData[] = $item;
+            }
+        }
+        return $cleanedData;
     }
 
     /**
@@ -68,6 +88,21 @@ class syntax_plugin_newsticker_ticker extends DokuWiki_Syntax_Plugin {
      */
     public function render($mode, Doku_Renderer &$renderer, $data) {
         if($mode != 'xhtml') return false;
+        if (empty($data)) return false;
+
+        $renderer->doc .= '<div id="plugin-newsticker" class="ticking">';
+        $renderer->doc .= '<ul id="tickerlist">';
+        foreach ($data as $newsItem) {
+            $renderer->doc .= '<li><div class="li">';
+            $renderer->doc .= p_render('xhtml', $newsItem, $info);
+            $renderer->doc .= "</div></li>";
+        }
+        $renderer->doc .= "</ul>";
+        $renderer->doc .= '<div class="no">';
+        $renderer->doc .= '<button class="button" type="button" id="plugin_newsticker_unticker">' . $this->getLang('previous') . '</button>';
+        $renderer->doc .= '<button class="button" type="button" id="plugin_newsticker_ticker">' . $this->getLang('next') . '</button>';
+        $renderer->doc .= '</div>';
+        $renderer->doc .= '</div>';
 
         return true;
     }
