@@ -97,10 +97,10 @@ class syntax_plugin_newsticker_ticker extends DokuWiki_Syntax_Plugin {
         $renderer->doc .= '<div id="plugin-newsticker" class="ticking">';
         $renderer->doc .= '<ul id="tickerlist">';
         foreach ($data as $index => $newsItem) {
-            $renderer->doc .= '<li><div class="li">';
+            $renderer->doc .= '<li>';
             $renderer->doc .= $newsItem;
             $renderer->doc .= '<span class="newsticker-counter">'. ($index+1) . '/' . count($data) . '</span>';
-            $renderer->doc .= "</div></li>";
+            $renderer->doc .= '</li>';
         }
         $renderer->doc .= "</ul>";
         $renderer->doc .= '<div class="no ticker-buttons">';

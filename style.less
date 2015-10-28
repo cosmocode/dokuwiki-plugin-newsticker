@@ -1,9 +1,12 @@
 @newsticker-font-size: 1.2em;
+@newsticker-color: black;
 @newsticker-background-color: #F5F3E5;
 @newsticker-ticker-height: 1.95em;
+@newsticker-ticker-width: 50%;
+@newsticker-text-align: center;
 
 ul#tickerlist{
-    width: 90%;
+    width: @newsticker-ticker-width;
     height: @newsticker-ticker-height;
     float:left;
     overflow: hidden;
@@ -18,12 +21,13 @@ ul#tickerlist{
     font-style: italic;
 }
 ul#tickerlist li {
-    text-align: center;
+    text-align: @newsticker-text-align;
     list-style: none;
     height:1em;
     padding:0.15em;
     margin-left:0;
     font-size: @newsticker-font-size;
+    color: @newsticker-color;
 }
 
 div.ticker-buttons {
