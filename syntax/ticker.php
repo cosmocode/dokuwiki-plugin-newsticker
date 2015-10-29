@@ -95,6 +95,10 @@ class syntax_plugin_newsticker_ticker extends DokuWiki_Syntax_Plugin {
         if (empty($data)) return false;
 
         $renderer->doc .= '<div id="plugin-newsticker" class="ticking">';
+        $renderer->doc .= '<div class="no ticker-buttons">';
+        $renderer->doc .= '<button class="plugin_newsticker" type="button" id="plugin_newsticker_unticker" title="' . $this->getLang('previous') . '">' . ''  . '</button>';
+        $renderer->doc .= '<button class="plugin_newsticker" type="button" id="plugin_newsticker_ticker" title="' . $this->getLang('next') . '">' . '' . '</button>';
+        $renderer->doc .= '</div>';
         $renderer->doc .= '<ul id="tickerlist">';
         foreach ($data as $index => $newsItem) {
             $renderer->doc .= '<li>';
@@ -103,10 +107,6 @@ class syntax_plugin_newsticker_ticker extends DokuWiki_Syntax_Plugin {
             $renderer->doc .= '</li>';
         }
         $renderer->doc .= "</ul>";
-        $renderer->doc .= '<div class="no ticker-buttons">';
-        $renderer->doc .= '<button class="plugin_newsticker" type="button" id="plugin_newsticker_unticker" title="' . $this->getLang('previous') . '">' . ''  . '</button>';
-        $renderer->doc .= '<button class="plugin_newsticker" type="button" id="plugin_newsticker_ticker" title="' . $this->getLang('next') . '">' . '' . '</button>';
-        $renderer->doc .= '</div>';
         $renderer->doc .= '</div>';
 
         return true;
